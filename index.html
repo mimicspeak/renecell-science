@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RENE-CELL 成分科學筆記</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans TC',sans-serif;background:#0e0e0f;color:#e8e2d9;overflow-x:hidden;line-height:1.7}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+
+/* ── VARS ── */
+:root{
+  --bg:       #0e0e0f;
+  --bg2:      #141416;
+  --bg3:      #1a1a1d;
+  --surface:  #1e1e22;
+  --border:   rgba(255,255,255,0.08);
+  --border2:  rgba(255,255,255,0.14);
+  --text:     #e8e2d9;
+  --muted:    #8a8478;
+  --gold:     #c9a96e;
+  --gold-lt:  #e8d5a8;
+  --blue:     #4a9eff;
+  --blue-dk:  #1a5fa0;
+  --green:    #5fbf8a;
+  --rose:     #d4827a;
+  --mono:     'DM Mono', monospace;
+  --serif:    'Cormorant Garamond', serif;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes borderGlow{0%,100%{box-shadow:0 0 0 1px rgba(201,169,110,.2)}50%{box-shadow:0 0 20px rgba(201,169,110,.15),0 0 0 1px rgba(201,169,110,.4)}}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 48px;
+  background:rgba(14,14,15,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--mono);
+  font-size:13px;letter-spacing:3px;color:var(--gold);
+}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+  font-size:11px;letter-spacing:2px;color:var(--muted);
+  transition:color .2s;text-transform:uppercase;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-tag{
+  font-family:var(--mono);font-size:10px;
+  border:1px solid var(--border2);
+  color:var(--muted);padding:6px 14px;border-radius:2px;
+  letter-spacing:2px;
+}
+
+/* ── CONTAINER ── */
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.container-sm{max-width:720px;margin:0 auto;padding:0 24px}
+
+/* ── SECTION ── */
+section{padding:100px 24px}
+.section-label{
+  font-family:var(--mono);
+  font-size:10px;letter-spacing:4px;
+  color:var(--gold);text-transform:uppercase;
+  margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-label::before{
+  content:'';width:24px;height:1px;background:var(--gold);opacity:.5;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(32px,4.5vw,52px);
+  font-weight:300;line-height:1.15;
+  margin-bottom:20px;
+}
+.section-sub{
+  font-size:14px;color:var(--muted);
+  line-height:2;max-width:560px;
+}
+.divider{
+  width:100%;height:1px;
+  background:var(--border);
+  margin:80px 0;
+}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:160px 48px 100px;
+  position:relative;overflow:hidden;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
+}
+.hero-glow{
+  position:absolute;
+  width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(201,169,110,.06) 0%,transparent 70%);
+  top:-100px;right:-100px;
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:1}
+.hero-eyebrow{
+  font-family:var(--mono);
+  font-size:11px;letter-spacing:4px;
+  color:var(--muted);margin-bottom:32px;
+  display:flex;align-items:center;gap:16px;
+}
+.hero-eyebrow::after{content:'';flex:0 0 40px;height:1px;background:var(--border2)}
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(40px,6vw,80px);
+  font-weight:300;line-height:1.1;
+  margin-bottom:32px;
+  max-width:700px;
+}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-body{
+  font-size:15px;color:var(--muted);
+  line-height:2;max-width:520px;
+  margin-bottom:48px;
+}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:12px;
+  border:1px solid var(--border2);
+  padding:14px 28px;
+  font-family:var(--mono);font-size:11px;
+  letter-spacing:3px;color:var(--text);
+  transition:all .3s;
+  text-transform:uppercase;
+}
+.hero-cta:hover{border-color:var(--gold);color:var(--gold)}
+.hero-cta::after{content:'→';font-family:sans-serif}
+.hero-disclaimer{
+  margin-top:60px;
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);opacity:.5;
+  letter-spacing:1px;
+  border-left:1px solid var(--border);
+  padding-left:16px;
+  max-width:500px;
+}
+
+/* ── CERT SECTION ── */
+.cert-section{background:var(--bg2)}
+.cert-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  margin-top:60px;
+}
+.cert-card{
+  background:var(--bg2);
+  padding:40px 36px;
+  transition:background .3s;
+}
+.cert-card:hover{background:var(--surface)}
+.cert-code{
+  font-family:var(--mono);font-size:11px;
+  color:var(--gold);letter-spacing:3px;
+  margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.cert-code::before{
+  content:'';width:6px;height:6px;
+  border-radius:50%;background:var(--gold);
+  animation:pulse 2s ease infinite;
+}
+.cert-name{
+  font-size:18px;font-weight:700;
+  color:var(--text);margin-bottom:12px;
+  letter-spacing:1px;
+}
+.cert-body{font-size:13px;color:var(--muted);line-height:1.9}
+.cert-detail{
+  margin-top:20px;padding-top:20px;
+  border-top:1px solid var(--border);
+  font-family:var(--mono);font-size:11px;
+  color:var(--muted);line-height:1.8;
+}
+
+/* ── PEPTIDE SECTION ── */
+.peptide-section{background:var(--bg)}
+.comparison-table{
+  width:100%;border-collapse:collapse;
+  margin-top:48px;font-size:13px;
+}
+.comparison-table th{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:2px;color:var(--muted);
+  text-transform:uppercase;
+  padding:12px 20px;
+  border-bottom:1px solid var(--border2);
+  text-align:left;font-weight:400;
+}
+.comparison-table td{
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+  color:var(--muted);vertical-align:top;
+  line-height:1.7;
+}
+.comparison-table tr:hover td{background:var(--surface)}
+.comparison-table .highlight td{color:var(--text)}
+.comparison-table .highlight td:first-child{
+  color:var(--gold);font-weight:500;
+}
+.tag{
+  display:inline-block;
+  font-family:var(--mono);font-size:10px;
+  padding:3px 8px;border-radius:2px;
+  letter-spacing:1px;
+}
+.tag-gold{background:rgba(201,169,110,.12);color:var(--gold);border:1px solid rgba(201,169,110,.2)}
+.tag-blue{background:rgba(74,158,255,.1);color:var(--blue);border:1px solid rgba(74,158,255,.2)}
+.tag-green{background:rgba(95,191,138,.1);color:var(--green);border:1px solid rgba(95,191,138,.2)}
+
+.peptide-types{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;margin-top:48px;
+}
+.peptide-card{
+  border:1px solid var(--border);
+  padding:28px 24px;
+  transition:border-color .3s;
+}
+.peptide-card:hover{border-color:var(--border2)}
+.pep-type{
+  font-family:var(--mono);font-size:10px;
+  color:var(--gold);letter-spacing:3px;
+  margin-bottom:10px;
+}
+.pep-name{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.pep-inci{
+  font-family:var(--mono);font-size:11px;
+  color:var(--muted);margin-bottom:12px;
+}
+.pep-body{font-size:12.5px;color:var(--muted);line-height:1.8}
+
+/* ── DIAMOND MECHANISM ── */
+.diamond-section{background:var(--bg2)}
+.mechanism-flow{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;margin-top:60px;
+  border:1px solid var(--border);
+}
+.mech-step{
+  padding:36px 28px;
+  border-right:1px solid var(--border);
+  position:relative;
+}
+.mech-step:last-child{border-right:none}
+.mech-num{
+  font-family:var(--mono);
+  font-size:48px;font-weight:300;
+  color:var(--gold);opacity:.12;
+  line-height:1;margin-bottom:-8px;
+}
+.mech-icon{font-size:24px;margin-bottom:16px}
+.mech-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:1px}
+.mech-body{font-size:12px;color:var(--muted);line-height:1.8}
+.mech-arrow{
+  position:absolute;top:50%;right:-12px;
+  width:22px;height:22px;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--gold);
+  transform:translateY(-50%);z-index:1;
+}
+
+.hardness-bar{
+  display:flex;align-items:center;gap:16px;
+  margin-top:40px;
+  padding:24px;
+  border:1px solid var(--border);
+  background:var(--surface);
+}
+.hardness-item{flex:1;text-align:center}
+.hardness-val{
+  font-family:var(--mono);font-size:28px;
+  font-weight:300;color:var(--gold);
+}
+.hardness-label{font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:1px}
+.hardness-divider{width:1px;height:48px;background:var(--border)}
+.vs-badge{
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);letter-spacing:2px;
+}
+
+/* ── ACNE SECTION ── */
+.acne-section{background:var(--bg)}
+.acne-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:40px;margin-top:60px;
+}
+.acne-cause{
+  border:1px solid var(--border);
+  padding:32px 28px;
+  position:relative;overflow:hidden;
+}
+.acne-cause::before{
+  content:'';
+  position:absolute;top:0;left:0;
+  width:3px;height:100%;
+  background:var(--cause-color);
+}
+.cause-num{
+  font-family:var(--mono);font-size:11px;
+  color:var(--cause-color);letter-spacing:3px;
+  margin-bottom:12px;
+}
+.cause-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px}
+.cause-mechanism{
+  font-size:12.5px;color:var(--muted);
+  line-height:1.9;margin-bottom:20px;
+}
+.cause-solution{
+  padding:16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:0;
+}
+.solution-label{
+  font-family:var(--mono);font-size:10px;
+  color:var(--gold);letter-spacing:2px;
+  margin-bottom:8px;
+}
+.solution-text{font-size:12px;color:var(--muted);line-height:1.8}
+
+/* ── MEDICAL COMPARISON ── */
+.medical-section{background:var(--bg2)}
+.medical-intro{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:start;margin-bottom:60px;
+}
+.verdict-box{
+  border:1px solid var(--border2);
+  padding:32px;background:var(--surface);
+}
+.verdict-title{
+  font-family:var(--mono);font-size:11px;
+  color:var(--gold);letter-spacing:3px;
+  margin-bottom:16px;
+}
+.verdict-item{
+  display:flex;gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+}
+.verdict-item:last-child{border-bottom:none}
+.verdict-phase{
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);flex-shrink:0;width:80px;
+  padding-top:2px;letter-spacing:1px;
+}
+.verdict-rec{color:var(--text);line-height:1.7}
+
+.treatment-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.treatment-table th{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:2px;color:var(--muted);
+  text-transform:uppercase;padding:10px 16px;
+  border-bottom:1px solid var(--border2);
+  text-align:left;font-weight:400;
+}
+.treatment-table td{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  color:var(--muted);vertical-align:top;
+  line-height:1.6;
+}
+.treatment-table tr:hover td{background:var(--surface)}
+.treatment-table .featured td{color:var(--text)}
+.treatment-table .featured td:first-child{color:var(--gold)}
+.pro-con{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  margin-top:40px;
+}
+.pro-con-col{background:var(--bg2);padding:32px}
+.pro-con-title{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:3px;margin-bottom:20px;
+  padding-bottom:12px;border-bottom:1px solid var(--border);
+}
+.pro-con-title.pros{color:var(--green)}
+.pro-con-title.cons{color:var(--rose)}
+.pro-con-item{
+  display:flex;gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+  font-size:13px;color:var(--muted);
+  line-height:1.7;
+}
+.pro-con-item:last-child{border-bottom:none}
+.pro-con-item::before{
+  content:'';flex-shrink:0;
+  width:4px;height:4px;border-radius:50%;
+  margin-top:9px;
+}
+.pros .pro-con-item::before{background:var(--green)}
+.cons .pro-con-item::before{background:var(--rose)}
+
+/* ── TECH SECTION ── */
+.tech-section{background:var(--bg)}
+.tech-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  margin-top:60px;
+}
+.tech-card{
+  background:var(--bg);
+  padding:36px 28px;
+  transition:background .3s;
+}
+.tech-card:hover{background:var(--surface)}
+.tech-num{
+  font-family:var(--mono);
+  font-size:10px;color:var(--muted);
+  letter-spacing:3px;margin-bottom:20px;
+}
+.tech-icon{font-size:24px;margin-bottom:14px}
+.tech-name{
+  font-size:14px;font-weight:700;
+  color:var(--text);margin-bottom:8px;letter-spacing:.5px;
+}
+.tech-inci{
+  font-family:var(--mono);font-size:10.5px;
+  color:var(--gold);margin-bottom:12px;
+  line-height:1.6;
+}
+.tech-body{font-size:12.5px;color:var(--muted);line-height:1.8;margin-bottom:16px}
+.tech-for{
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);letter-spacing:1px;
+  border-top:1px solid var(--border);
+  padding-top:12px;
+}
+
+/* ── INGREDIENTS ── */
+.ing-section{background:var(--bg2)}
+.ing-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:16px;margin-top:48px;
+}
+.ing-card{
+  border:1px solid var(--border);
+  padding:28px 24px;
+  transition:border-color .3s,background .3s;
+}
+.ing-card:hover{border-color:var(--border2);background:var(--surface)}
+.ing-icon{font-size:28px;margin-bottom:14px}
+.ing-inci{
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);margin-bottom:6px;letter-spacing:1px;
+}
+.ing-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.ing-benefit{
+  font-size:10px;letter-spacing:2px;
+  color:var(--gold);margin-bottom:12px;
+}
+.ing-body{font-size:12px;color:var(--muted);line-height:1.8}
+.ing-note{
+  margin-top:12px;
+  font-family:var(--mono);font-size:10px;
+  color:var(--rose);line-height:1.6;
+}
+
+/* ── SKIN TYPE ── */
+.skin-section{background:var(--bg)}
+.skin-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;margin-top:48px;
+}
+.skin-card{
+  border:1px solid var(--border);
+  padding:32px 24px;
+  position:relative;overflow:hidden;
+  transition:border-color .3s;
+}
+.skin-card:hover{border-color:var(--border2)}
+.skin-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:2px;background:var(--skin-color);
+}
+.skin-type{
+  font-family:var(--mono);font-size:10px;
+  color:var(--skin-color);letter-spacing:3px;
+  margin-bottom:12px;
+}
+.skin-name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:10px}
+.skin-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:20px}
+.skin-traits{list-style:none;margin-bottom:20px}
+.skin-traits li{
+  font-size:12.5px;color:var(--muted);
+  padding:6px 0;
+  border-bottom:1px solid var(--border);
+  display:flex;gap:8px;align-items:baseline;
+}
+.skin-traits li:last-child{border-bottom:none}
+.skin-traits li::before{
+  content:'·';color:var(--skin-color);
+  font-size:20px;line-height:1;flex-shrink:0;
+}
+.skin-rec{
+  padding:14px;background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+}
+.skin-rec-label{
+  font-family:var(--mono);font-size:9px;
+  color:var(--gold);letter-spacing:2px;margin-bottom:6px;
+}
+.skin-rec-text{font-size:11.5px;color:var(--muted);line-height:1.7}
+
+/* ── CTA ── */
+.cta-section{
+  background:var(--bg2);
+  text-align:center;padding:120px 24px;
+  position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.cta-inner{position:relative;z-index:1}
+.cta-label{
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:4px;color:var(--gold);
+  margin-bottom:40px;
+  display:flex;align-items:center;justify-content:center;gap:16px;
+}
+.cta-label::before,.cta-label::after{content:'';flex:0 0 40px;height:1px;background:rgba(201,169,110,.3)}
+.cta-title{
+  font-family:var(--serif);
+  font-size:clamp(28px,4vw,48px);
+  font-weight:300;line-height:1.4;
+  margin-bottom:16px;
+}
+.cta-title em{font-style:italic;color:var(--gold)}
+.cta-sub{
+  font-size:14px;color:var(--muted);
+  line-height:2;max-width:480px;
+  margin:0 auto 48px;
+}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--gold);color:#0e0e0f;
+  padding:16px 40px;font-size:13px;
+  font-weight:700;letter-spacing:3px;
+  transition:all .3s;text-transform:uppercase;
+  font-family:var(--mono);
+}
+.cta-btn:hover{background:var(--gold-lt);transform:translateY(-2px)}
+.cta-stats{
+  display:flex;gap:60px;justify-content:center;
+  flex-wrap:wrap;margin-top:64px;
+  opacity:.45;
+}
+.stat-item{text-align:center}
+.stat-num{
+  font-family:var(--serif);font-size:40px;
+  font-weight:300;color:var(--text);
+}
+.stat-label{
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);letter-spacing:2px;
+  margin-top:4px;
+}
+
+/* ── FOOTER ── */
+footer{
+  background:#0a0a0b;
+  padding:48px 24px;
+  border-top:1px solid var(--border);
+}
+.footer-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+  margin-bottom:40px;
+}
+.footer-card{
+  background:#0a0a0b;padding:28px;
+}
+.footer-card-title{
+  font-family:var(--mono);font-size:10px;
+  color:var(--gold);letter-spacing:3px;
+  margin-bottom:12px;
+}
+.footer-card-body{
+  font-size:12px;color:var(--muted);line-height:1.9;
+}
+.footer-bottom{
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);opacity:.4;
+  letter-spacing:2px;text-align:center;
+  line-height:2.2;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:14px 20px}
+  .nav-links{display:none}
+  .cert-grid,.tech-grid{grid-template-columns:1fr}
+  .mechanism-flow{grid-template-columns:1fr 1fr}
+  .acne-grid,.medical-intro,.pro-con,.footer-grid{grid-template-columns:1fr}
+  .mech-step{border-right:none;border-bottom:1px solid var(--border)}
+  .mech-arrow{display:none}
+  .skin-grid-4{grid-template-columns:repeat(2,1fr) !important}
+}
+@media(max-width:600px){
+  section{padding:72px 20px}
+  .mechanism-flow{grid-template-columns:1fr}
+  .hero{padding:120px 24px 80px}
+  .skin-grid-4{grid-template-columns:1fr !important}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">RENE-CELL / 成分筆記</div>
+  <ul class="nav-links">
+    <li><a href="#cert">國際認證</a></li>
+    <li><a href="#peptide">成分解析</a></li>
+    <li><a href="#diamond">鑽石煥膚</a></li>
+    <li><a href="#acne">膚質專項</a></li>
+    <li><a href="#medical">醫美比較</a></li>
+    <li><a href="#ingredients">成分庫</a></li>
+  </ul>
+  <div class="nav-tag">個人研究筆記</div>
+</nav>
+
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content container">
+    <div class="hero-eyebrow fade-up">成分研究筆記 vol.1</div>
+    <h1 class="hero-title fade-up" style="animation-delay:.1s">
+      RENE-CELL 的成分研究筆記<br>
+      <span style="font-size:clamp(18px,2.5vw,32px);color:var(--muted);font-weight:300;letter-spacing:3px;font-style:normal">從 ISO 認證、原料來源到配方邏輯</span>
+    </h1>
+    <a href="#cert" class="hero-cta fade-up" style="animation-delay:.3s">
+      開始閱讀&nbsp;
+    </a>
+    <div class="hero-disclaimer fade-in" style="animation-delay:.6s">
+      本內容為個人體驗與成分研究紀錄，非品牌官方內容，非醫療建議。
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 認證 ══ -->
+<section class="cert-section" id="cert">
+  <div class="container">
+    <div class="section-label reveal">製造標準</div>
+    <h2 class="section-title reveal">三個認證，代表什麼？</h2>
+
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-code">CGMP</div>
+        <div class="cert-name">韓國優良製造規範</div>
+        <div class="cert-body">
+          韓國化妝品製造最高標準。要求原料採購、生產環境、品管流程全程可追溯。
+          由韓國食品藥品安全部（MFDS）負責稽核。
+        </div>
+        <div class="cert-detail">
+          涵蓋：原料管理 / 生產設施 / 品質控管 / 出貨檢驗
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-code">ISO 9001</div>
+        <div class="cert-name">國際品質管理系統</div>
+        <div class="cert-body">
+          國際標準化組織認證的品質管理框架。
+          有系統性的品質控管流程，每年外部稽核，每3年換證。
+        </div>
+        <div class="cert-detail">
+          核心：流程標準化 / 持續改善機制 / 客訴管理系統
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-code">ISO 22716</div>
+        <div class="cert-name">化妝品 GMP 國際標準</div>
+        <div class="cert-body">
+          歐盟、韓國等地的化妝品製造基準。
+          規範生產、管制、儲存與出貨的完整流程。
+        </div>
+        <div class="cert-detail">
+          等同：歐盟 EN ISO 22716 / 東協 ASEAN GMP
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 胜肽差異化 ══ -->
+<section class="peptide-section" id="peptide">
+  <div class="container">
+    <div class="section-label reveal">成分解析</div>
+    <h2 class="section-title reveal">同樣是「含胜肽」，差在哪裡？</h2>
+
+    <!-- 什麼是胜肽 -->
+    <div style="margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center" class="reveal">
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:16px;">先理解胜肽是什麼</div>
+        <p style="font-size:14px;color:var(--muted);line-height:2;">
+          胜肽是由2-50個胺基酸組成的短鏈蛋白質片段。在保養品裡，它不是直接「補充」皮膚缺少的東西，而是<strong style="color:var(--text)">模仿特定生物信號，告訴細胞去做某件事</strong>。
+        </p>
+        <p style="font-size:14px;color:var(--muted);line-height:2;margin-top:16px;">
+          關鍵在這裡——<strong style="color:var(--text)">不同的胜肽，發出的是完全不同的信號，作用在完全不同的靶點上。</strong> 這就是為什麼「含幾種胜肽」比「含多少胜肽」重要。
+        </p>
+      </div>
+
+      <!-- 改良版信號圖 -->
+      <div style="display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px">
+          <defs>
+            <marker id="arr2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+              <path d="M0,0 L0,7 L7,3.5 z" fill="#c9a96e" opacity=".7"/>
+            </marker>
+            <radialGradient id="gPep" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#c9a96e" stop-opacity=".25"/>
+              <stop offset="100%" stop-color="#c9a96e" stop-opacity=".04"/>
+            </radialGradient>
+            <radialGradient id="gCell" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#5fbf8a" stop-opacity=".15"/>
+              <stop offset="100%" stop-color="#5fbf8a" stop-opacity=".03"/>
+            </radialGradient>
+          </defs>
+
+          <!-- 胜肽分子（左） -->
+          <circle cx="56" cy="100" r="36" fill="url(#gPep)" stroke="#c9a96e" stroke-width="1.5" opacity=".8"/>
+          <circle cx="56" cy="100" r="26" fill="none" stroke="#c9a96e" stroke-width=".6" stroke-dasharray="3,3" opacity=".4"/>
+          <text x="56" y="95" text-anchor="middle" font-size="11" fill="#c9a96e" font-family="monospace" font-weight="500">胜肽</text>
+          <text x="56" y="110" text-anchor="middle" font-size="8.5" fill="#c9a96e" font-family="monospace" opacity=".6">Peptide</text>
+
+          <!-- 連接線 -->
+          <path d="M94,100 Q130,100 148,100" stroke="#c9a96e" stroke-width="1.5" fill="none" opacity=".5" marker-end="url(#arr2)" stroke-dasharray="5,3"/>
+
+          <!-- 受體區（中） -->
+          <rect x="150" y="68" width="88" height="64" rx="6" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
+          <rect x="158" y="76" width="72" height="20" rx="3" fill="rgba(201,169,110,.1)" stroke="rgba(201,169,110,.3)" stroke-width=".8"/>
+          <text x="194" y="91" text-anchor="middle" font-size="9" fill="#c9a96e" font-family="monospace">細胞受體</text>
+          <text x="194" y="110" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,.45)" font-family="monospace">鎖定 · 接收信號</text>
+          <text x="194" y="124" text-anchor="middle" font-size="8.5" fill="rgba(255,255,255,.45)" font-family="monospace">啟動下游路徑</text>
+
+          <!-- 下連接線 -->
+          <path d="M194,134 L194,168" stroke="#c9a96e" stroke-width="1.5" fill="none" opacity=".4" marker-end="url(#arr2)" stroke-dasharray="5,3"/>
+
+          <!-- 細胞核（下） -->
+          <ellipse cx="194" cy="204" rx="68" ry="36" fill="url(#gCell)" stroke="#5fbf8a" stroke-width="1.2" opacity=".8"/>
+          <ellipse cx="194" cy="204" rx="52" ry="25" fill="none" stroke="#5fbf8a" stroke-width=".5" stroke-dasharray="3,3" opacity=".4"/>
+          <text x="194" y="199" text-anchor="middle" font-size="9.5" fill="#5fbf8a" font-family="monospace">細胞核</text>
+          <text x="194" y="215" text-anchor="middle" font-size="8.5" fill="#5fbf8a" font-family="monospace" opacity=".8">執行生產指令</text>
+
+          <!-- 右側三個輸出 -->
+          <line x1="264" y1="190" x2="298" y2="175" stroke="#5fbf8a" stroke-width="1" opacity=".4" stroke-dasharray="3,2"/>
+          <line x1="264" y1="204" x2="298" y2="204" stroke="#5fbf8a" stroke-width="1" opacity=".4" stroke-dasharray="3,2"/>
+          <line x1="264" y1="218" x2="298" y2="233" stroke="#5fbf8a" stroke-width="1" opacity=".4" stroke-dasharray="3,2"/>
+
+          <rect x="300" y="162" width="106" height="26" rx="3" fill="rgba(95,191,138,.08)" stroke="rgba(95,191,138,.25)" stroke-width=".8"/>
+          <text x="353" y="179" text-anchor="middle" font-size="8.5" fill="#5fbf8a" font-family="monospace">製造膠原蛋白</text>
+
+          <rect x="300" y="191" width="106" height="26" rx="3" fill="rgba(95,191,138,.08)" stroke="rgba(95,191,138,.25)" stroke-width=".8"/>
+          <text x="353" y="208" text-anchor="middle" font-size="8.5" fill="#5fbf8a" font-family="monospace">抑制肌肉收縮</text>
+
+          <rect x="300" y="220" width="106" height="26" rx="3" fill="rgba(95,191,138,.08)" stroke="rgba(95,191,138,.25)" stroke-width=".8"/>
+          <text x="353" y="237" text-anchor="middle" font-size="8.5" fill="#5fbf8a" font-family="monospace">阻斷色素傳遞…</text>
+
+          <!-- 左側標注 -->
+          <text x="6" y="60" font-size="8.5" fill="rgba(201,169,110,.5)" font-family="monospace">分子量</text>
+          <text x="6" y="72" font-size="8.5" fill="rgba(201,169,110,.5)" font-family="monospace">500-2000 Da</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="divider" style="margin:60px 0"></div>
+
+    <!-- 功能分工 + 六種胜肽整合 -->
+    <div class="reveal">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:16px;">功能分工系統</div>
+      <p style="font-size:14px;color:var(--muted);line-height:2;margin-bottom:40px;">
+        皮膚老化不是單一成因，而是六件事同時在發生。
+        RENE-CELL 的設計邏輯是：<strong style="color:var(--text)">每個老化成因，各派一種胜肽去處理。</strong>
+        以下六格，每格是一個老化成因，以及對應的胜肽與其作用機制。
+      </p>
+
+      <!-- 六格整合：成因 + 胜肽機制 -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+
+        <div style="border:1px solid rgba(212,130,122,.35);background:rgba(212,130,122,.05);padding:24px 20px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(212,130,122,.18);border:1px solid rgba(212,130,122,.4);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🧱</div>
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:#d4827a;letter-spacing:2px">成因 01</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text)">膠原蛋白流失</div>
+            </div>
+          </div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.7;margin-bottom:12px">真皮層支撐結構崩解，肌膚鬆弛、彈性下降</div>
+          <div style="border-top:1px solid rgba(212,130,122,.2);padding-top:12px">
+            <div style="font-family:var(--mono);font-size:9px;color:#d4827a;margin-bottom:4px">對應胜肽 · Tripeptide-1</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,.6);line-height:1.7">模仿膠原蛋白前驅體的信號片段，啟動纖維母細胞合成第一型膠原蛋白</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(201,169,110,.35);background:rgba(201,169,110,.05);padding:24px 20px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(201,169,110,.18);border:1px solid rgba(201,169,110,.4);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">😤</div>
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:2px">成因 02</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text)">表情肌反覆收縮</div>
+            </div>
+          </div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.7;margin-bottom:12px">長期皺眉、瞇眼造成法令紋、魚尾紋加深</div>
+          <div style="border-top:1px solid rgba(201,169,110,.2);padding-top:12px">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--gold);margin-bottom:4px">對應胜肽 · Acetyl Hexapeptide-8</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,.6);line-height:1.7">抑制神經肌肉接合處乙醯膽鹼釋放，外用類肉毒機制，無需注射</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(95,191,138,.35);background:rgba(95,191,138,.05);padding:24px 20px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(95,191,138,.18);border:1px solid rgba(95,191,138,.4);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">💧</div>
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:#5fbf8a;letter-spacing:2px">成因 03</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text)">眼周浮腫循環差</div>
+            </div>
+          </div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.7;margin-bottom:12px">微循環不良導致眼袋浮腫、黑眼圈加重</div>
+          <div style="border-top:1px solid rgba(95,191,138,.2);padding-top:12px">
+            <div style="font-family:var(--mono);font-size:9px;color:#5fbf8a;margin-bottom:4px">對應胜肽 · Acetyl Tetrapeptide-5</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,.6);line-height:1.7">改善眼周微循環，抑制血管緊張素轉化酶，減少眼袋浮腫與黑眼圈</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(152,128,184,.35);background:rgba(152,128,184,.05);padding:24px 20px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(152,128,184,.18);border:1px solid rgba(152,128,184,.4);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🌑</div>
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:#9880b8;letter-spacing:2px">成因 04</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text)">黑色素異常傳遞</div>
+            </div>
+          </div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.7;margin-bottom:12px">色素不均、暗沉、痘後色素沉澱難以改善</div>
+          <div style="border-top:1px solid rgba(152,128,184,.2);padding-top:12px">
+            <div style="font-family:var(--mono);font-size:9px;color:#9880b8;margin-bottom:4px">對應胜肽 · Nicotinoyl Tripeptide-1</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,.6);line-height:1.7">阻斷黑色素體從黑色素細胞傳遞至角質細胞的路徑，搭配熊果素協同亮白</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(74,158,255,.35);background:rgba(74,158,255,.05);padding:24px 20px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(74,158,255,.18);border:1px solid rgba(74,158,255,.4);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🕸️</div>
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:#4a9eff;letter-spacing:2px">成因 05</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text)">角質層結構受損</div>
+            </div>
+          </div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.7;margin-bottom:12px">屏障功能下降，保水力差、外界刺激容易進入</div>
+          <div style="border-top:1px solid rgba(74,158,255,.2);padding-top:12px">
+            <div style="font-family:var(--mono);font-size:9px;color:#4a9eff;margin-bottom:4px">對應胜肽 · r-Spider Polypeptide-1</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,.6);line-height:1.7">仿蜘蛛絲蛋白結構，高彈性高強度，協助修護受損角質層，鑽石系列特色成分</div>
+          </div>
+        </div>
+
+        <div style="border:1px solid rgba(255,200,100,.35);background:rgba(255,200,100,.05);padding:24px 20px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,200,100,.18);border:1px solid rgba(255,200,100,.4);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🔄</div>
+            <div>
+              <div style="font-family:var(--mono);font-size:9px;color:#ffc864;letter-spacing:2px">成因 06</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text)">細胞更新變慢</div>
+            </div>
+          </div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.7;margin-bottom:12px">新生細胞週期延長，膚色暗沉、修護能力下降</div>
+          <div style="border-top:1px solid rgba(255,200,100,.2);padding-top:12px">
+            <div style="font-family:var(--mono);font-size:9px;color:#ffc864;margin-bottom:4px">對應胜肽 · sh-Decapeptide-9 系列</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,.6);line-height:1.7">生物工程胜肽，模仿生長因子信號機制，促進細胞更新與組織修護</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="divider" style="margin:60px 0"></div>
+
+    <!-- 為什麼需要多步驟 → 銜接鑽石系列 -->
+    <div class="reveal">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:24px;">為什麼需要多步驟？</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+        <div>
+          <p style="font-size:14px;color:var(--muted);line-height:2;margin-bottom:24px;">
+            <strong style="color:var(--text)">原因一：不同胜肽在不同的 pH 值和載體環境下才能保持活性。</strong><br>
+            把類肉毒胜肽和維生素C放在同一瓶，兩者都會失效。
+            分開使用，不是麻煩，是讓每個成分在最佳條件下作用。
+          </p>
+          <p style="font-size:14px;color:var(--muted);line-height:2;">
+            <strong style="color:var(--text)">原因二：胜肽分子量偏大（500-2000 Da），部分超過角質層滲透閾值（約 500 Da）。</strong><br>
+            皮膚的吸收通道有限，種類越多，每種實際進去的量越少。
+            一般產品用配方載體解決這個問題。
+          </p>
+        </div>
+        <div style="border:1px solid rgba(201,169,110,.25);background:rgba(201,169,110,.04);padding:32px">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:16px;">RENE-CELL 鑽石系列的思路</div>
+          <p style="font-size:13.5px;color:var(--muted);line-height:2;margin-bottom:20px;">
+            先用物理性去角質降低屏障厚度，清開通道，再讓胜肽進入。
+            不是依賴載體硬推，而是在皮膚準備好的狀態下讓成分自然滲透到基底層。
+          </p>
+          <div style="border-top:1px solid rgba(201,169,110,.2);padding-top:16px;font-size:12.5px;color:var(--muted);line-height:1.9">
+            這就是鑽石系列為什麼是獨立的步驟，<strong style="color:var(--text)">而不是可以省略的東西。</strong>
+          </div>
+          <div style="margin-top:20px">
+            <a href="#diamond" style="font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:2px;border-bottom:1px solid rgba(201,169,110,.3);padding-bottom:2px;">查看鑽石系列機制說明 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ 鑽石物理導引 ══ -->
+<section class="diamond-section" id="diamond">
+  <div class="container">
+
+    <!-- 流程圖 -->
+    <div class="mechanism-flow reveal">
+      <div class="mech-step">
+        <div class="mech-num">01</div>
+        <div class="mech-icon">💎</div>
+        <div class="mech-title">物理性去角質</div>
+        <div class="mech-body">
+          鑽石微晶、紅寶石粉、藍寶石粉透過物理摩擦，
+          移除堆積的老廢角質細胞，
+          降低成分需要穿越的屏障厚度。
+        </div>
+        <div class="mech-arrow">→</div>
+      </div>
+      <div class="mech-step">
+        <div class="mech-num">02</div>
+        <div class="mech-icon">🔓</div>
+        <div class="mech-title">通道清空</div>
+        <div class="mech-body">
+          角質層厚度減少，
+          細胞間脂質通道更通暢，
+          後續成分的實際接觸深度提升。
+          無化學刺激，敏感肌也能使用。
+        </div>
+        <div class="mech-arrow">→</div>
+      </div>
+      <div class="mech-step">
+        <div class="mech-num">03</div>
+        <div class="mech-icon">🧬</div>
+        <div class="mech-title">胜肽精準滲透</div>
+        <div class="mech-body">
+          在已清通的通道上使用精華、乳液，
+          胜肽、幹細胞萃取能更直接接觸
+          表皮基底層與真皮層。
+          同樣濃度，更高的實際作用效率。
+        </div>
+        <div class="mech-arrow">→</div>
+      </div>
+      <div class="mech-step">
+        <div class="mech-num">04</div>
+        <div class="mech-icon">🛡️</div>
+        <div class="mech-title">屏障修護鎖定</div>
+        <div class="mech-body">
+          去角質後立即補充神經醯胺、磷脂、膽固醇，
+          重建角質層脂質矩陣，
+          防止「去完角質屏障更脆弱」的惡性循環。
+        </div>
+      </div>
+    </div>
+
+    <!-- 莫氏硬度 -->
+    <div style="margin-top:48px" class="reveal">
+      <div class="section-label" style="margin-bottom:16px">為什麼選礦石微晶？</div>
+      <div class="hardness-bar">
+        <div class="hardness-item">
+          <div class="hardness-val">10</div>
+          <div class="hardness-label">鑽石粉<br>莫氏硬度</div>
+        </div>
+        <div class="hardness-divider"></div>
+        <div class="hardness-item">
+          <div class="hardness-val">9</div>
+          <div class="hardness-label">紅/藍寶石粉<br>莫氏硬度</div>
+        </div>
+        <div class="hardness-divider"></div>
+        <div class="vs-badge">VS</div>
+        <div class="hardness-divider"></div>
+        <div class="hardness-item">
+          <div class="hardness-val">2.5</div>
+          <div class="hardness-label">皮膚表皮<br>莫氏硬度</div>
+        </div>
+        <div class="hardness-divider"></div>
+        <div style="flex:2;padding:0 20px">
+          <div style="font-size:13px;color:var(--muted);line-height:1.9">
+            礦石硬度遠高於皮膚表皮，能有效進行物理性去角質，不需要化學酸性環境。
+            相比 AHA/BHA 需要特定 pH 值才能作用，<strong style="color:var(--text)">物理性導引不受膚質酸鹼值影響</strong>，
+            也不會因屏障受損產生灼熱感——對敏感肌友善度更高。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AHA vs 物理 -->
+    <div style="margin-top:32px" class="reveal">
+      <div style="overflow-x:auto">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>去角質方式</th>
+              <th>作用機制</th>
+              <th>敏感肌風險</th>
+              <th>受 pH 影響</th>
+              <th>即效性</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>化學性（AHA/BHA）</td>
+              <td>溶解角質橋接蛋白</td>
+              <td>中-高（濃度依賴）</td>
+              <td>是（pH &lt; 3.5 效果最佳）</td>
+              <td>高</td>
+            </tr>
+            <tr class="highlight">
+              <td>物理性（礦石微晶）</td>
+              <td>機械性摩擦移除</td>
+              <td>低（不產生化學刺激）</td>
+              <td>否</td>
+              <td>即時</td>
+            </tr>
+            <tr>
+              <td>酵素性（木瓜蛋白酶）</td>
+              <td>蛋白酶分解角質蛋白</td>
+              <td>低</td>
+              <td>部分（需特定溫度）</td>
+              <td>中</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 痘痘肌 ══ -->
+<section class="acne-section" id="acne">
+  <div class="container">
+    <div class="section-label reveal">膚質專項</div>
+    <h2 class="section-title reveal">這套產品如何應對嚴重痘痘肌？</h2>
+    <p class="section-sub reveal">痘痘不是單一原因造成的。有效的調理需要同時作用在四個根本成因上——任何一個沒有解決，都可能讓其他的努力打折扣。</p>
+
+    <div class="acne-grid">
+      <div class="acne-cause reveal" style="--cause-color:#c9a96e">
+        <div class="cause-num">成因 01</div>
+        <div class="cause-title">角質堆積 → 毛孔堵塞</div>
+        <div class="cause-mechanism">
+          角質細胞代謝過慢或異常堆積，堵塞毛囊開口，
+          形成粉刺（開放性／閉鎖性），是痘痘的第一步。
+        </div>
+        <div class="cause-solution">
+          <div class="solution-label">對應成分機制</div>
+          <div class="solution-text">
+            <strong style="color:var(--text)">三重疏通</strong>：乙醇酸（AHA）溶解角質橋接 +
+            乳糖酸（PHA）溫和適合敏感痘痘肌 +
+            鑽石微晶物理清除表層老廢角質。
+            三者機制不重疊，任一無法承受時其他仍在作用。
+          </div>
+        </div>
+      </div>
+
+      <div class="acne-cause reveal" style="--cause-color:#5fbf8a">
+        <div class="cause-num">成因 02</div>
+        <div class="cause-title">皮脂過度分泌 → 細菌養分</div>
+        <div class="cause-mechanism">
+          皮脂腺受雄性激素等因素刺激，分泌過量皮脂，
+          為痤瘡丙酸桿菌（C. acnes）提供大量養分，加速繁殖。
+        </div>
+        <div class="cause-solution">
+          <div class="solution-label">對應成分機制</div>
+          <div class="solution-text">
+            <strong style="color:var(--text)">調節而非抑制</strong>：乳酸菌大豆發酵液平衡皮膚微生態，
+            減少導致皮脂失衡的菌群；柳樹皮萃取含天然水楊酸（BHA），
+            脂溶性可深入毛孔溶解皮脂，不會因「缺油」引發反彈性出油。
+          </div>
+        </div>
+      </div>
+
+      <div class="acne-cause reveal" style="--cause-color:#d4827a">
+        <div class="cause-num">成因 03</div>
+        <div class="cause-title">C. acnes 增殖 → 炎症反應</div>
+        <div class="cause-mechanism">
+          痤瘡丙酸桿菌在無氧、富含皮脂的毛囊環境中大量繁殖，
+          觸發免疫反應，產生促炎細胞激素，形成紅腫的炎性痘。
+        </div>
+        <div class="cause-solution">
+          <div class="solution-label">對應成分機制</div>
+          <div class="solution-text">
+            <strong style="color:var(--text)">多路徑抗炎</strong>：茶樹葉油直接抑制 C. acnes（文獻支持）；
+            黃芩根萃取含黃芩素，抑制 IL-1β、TNF-α 等炎症介質；
+            馬齒莧萃取含 ω-3 脂肪酸，抑制花生四烯酸炎症路徑。
+            三種成分作用在不同路徑，降低耐受性風險。
+          </div>
+        </div>
+      </div>
+
+      <div class="acne-cause reveal" style="--cause-color:#4a9eff">
+        <div class="cause-num">成因 04</div>
+        <div class="cause-title">屏障受損 → 炎症擴大 + 痘疤</div>
+        <div class="cause-mechanism">
+          使用強力去角質後屏障受損，炎症反應擴大，
+          同時促炎環境導致黑色素細胞過度活化，
+          留下難以淡化的痘後色素沉澱（PIH）。
+        </div>
+        <div class="cause-solution">
+          <div class="solution-label">對應成分機制</div>
+          <div class="solution-text">
+            <strong style="color:var(--text)">打破惡性循環</strong>：神經醯胺NP重建角質層脂質 +
+            積雪草苷修護受損皮膚同時抑制疤痕形成 +
+            尿囊素促進細胞更新同時鎮靜。
+            去角質與修護同步進行，而非分開步驟。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 痘後色素 -->
+    <div style="margin-top:48px;padding:32px;border:1px solid var(--border);background:var(--surface)" class="reveal">
+      <div class="section-label" style="margin-bottom:16px">痘後問題：色素沉澱（PIH）</div>
+      <p style="font-size:13.5px;color:var(--muted);line-height:2;margin-bottom:24px">
+        痘後色素沉澱是痘痘肌最難處理的後遺症之一。
+        有效的介入需要在黑色素形成的不同階段同時作用：
+      </p>
+      <div style="overflow-x:auto">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>成分</th><th>作用階段</th><th>機制</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>熊果素（Arbutin）</td><td>黑色素生成</td><td>抑制酪胺酸酶活性，減少黑色素前驅物生成</td></tr>
+            <tr><td>抗壞血酸磷酸鈉（穩定型維C）</td><td>氧化步驟</td><td>抑制多巴醌氧化為黑色素的過程</td></tr>
+            <tr><td>菸鹼醯胺</td><td>傳遞階段</td><td>阻斷黑色素體從黑色素細胞傳遞至角質細胞</td></tr>
+            <tr><td>谷胱甘肽（Glutathione）</td><td>還原階段</td><td>將氧化型黑色素還原為淡色型，同時抗氧化</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 醫美比較 ══ -->
+<section class="medical-section" id="medical">
+  <div class="container">
+    <div class="section-label reveal">誠實比較</div>
+    <h2 class="section-title reveal">醫美療程 vs 居家保養</h2>
+
+    <!-- 療程總覽 -->
+    <div style="margin-top:60px;overflow-x:auto" class="reveal">
+      <table class="treatment-table">
+        <thead>
+          <tr>
+            <th>療程</th>
+            <th>主要目標</th>
+            <th>費用（台灣約行情）</th>
+            <th>恢復期</th>
+            <th>建議次數</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>果酸換膚</td>
+            <td>活躍痘痘、粉刺</td>
+            <td>NT$1,500-3,500 / 次</td>
+            <td>1-3天</td>
+            <td>6-8次</td>
+          </tr>
+          <tr>
+            <td>杏仁酸換膚</td>
+            <td>敏感痘痘肌</td>
+            <td>NT$2,000-4,000 / 次</td>
+            <td>幾乎無</td>
+            <td>6次</td>
+          </tr>
+          <tr>
+            <td>藍光 / 紅光治療</td>
+            <td>殺菌、消炎</td>
+            <td>NT$1,500-3,000 / 次</td>
+            <td>無</td>
+            <td>持續維持</td>
+          </tr>
+          <tr>
+            <td>脈衝光</td>
+            <td>痘後色素、泛紅</td>
+            <td>NT$3,000-8,000 / 次</td>
+            <td>1-3天</td>
+            <td>3-5次</td>
+          </tr>
+          <tr>
+            <td>淨膚雷射</td>
+            <td>毛孔、痘後色素</td>
+            <td>NT$3,000-8,000 / 次</td>
+            <td>1-3天</td>
+            <td>3-5次</td>
+          </tr>
+          <tr class="featured">
+            <td>飛梭雷射（非剝脫）</td>
+            <td>痘疤、凹洞、毛孔</td>
+            <td>NT$5,000-12,000 / 次</td>
+            <td>3-5天</td>
+            <td>3-6次</td>
+          </tr>
+          <tr class="featured">
+            <td>飛梭雷射（CO₂剝脫）</td>
+            <td>深層痘疤、凹洞</td>
+            <td>NT$8,000-20,000 / 次</td>
+            <td>7-14天</td>
+            <td>2-4次</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 飛梭特別說明 -->
+    <div style="margin-top:32px;padding:28px 32px;border:1px solid rgba(74,158,255,.2);background:rgba(74,158,255,.04)" class="reveal">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:3px;margin-bottom:12px;">飛梭雷射特別說明</div>
+      <p style="font-size:13.5px;color:var(--muted);line-height:2">
+        飛梭雷射處理的是<strong style="color:var(--text)">已發生的結構性損傷（疤）</strong>，
+        而非活躍中的痘痘。外用成分無論多好，都無法「填回」真皮層的凹疤——
+        這是飛梭雷射無法被保養品取代的位置。
+        <br><br>
+        但重要的是：<strong style="color:var(--text)">大多數醫師會要求痘痘穩定後才能做飛梭</strong>，
+        且術後需要嚴格的修護保養配合。
+        <strong style="color:var(--text)">先用保養品穩定痘痘，才有資格做飛梭。
+        做完飛梭，更需要保養品守住成果。</strong>
+      </p>
+    </div>
+
+    <!-- 好處 vs 壞處 -->
+    <div style="margin-top:48px">
+      <div class="section-label reveal" style="margin-bottom:0">醫美治療的評估</div>
+      <div class="pro-con reveal">
+        <div class="pro-con-col pros">
+          <div class="pro-con-title pros">✓ 醫美的優勢</div>
+          <div class="pro-con-item">濃度超越居家法規上限，短期改善效果明顯（診所AHA可達20-70%，消費品上限10%）</div>
+          <div class="pro-con-item">設備能作用到真皮層，改善皮脂腺活躍度，這是外用成分無法直接達到的</div>
+          <div class="pro-con-item">特定時間點（婚禮、重要場合）前的快速改善需求</div>
+          <div class="pro-con-item">由皮膚科醫師評估膚況，比自己摸索成分更精準</div>
+          <div class="pro-con-item">飛梭雷射是目前改善痘疤凹洞最有效的非手術方式</div>
+        </div>
+        <div class="pro-con-col cons">
+          <div class="pro-con-title cons">× 醫美的限制</div>
+          <div class="pro-con-item">恢復期屏障最脆弱，此時保養不當反而更容易感染或色素沉澱</div>
+          <div class="pro-con-item">只改善「當下狀態」，根本原因（皮脂分泌、菌群失衡）未解決就容易復發</div>
+          <div class="pro-con-item">費用累積驚人，果酸換膚6次 = NT$9,000起，停止療程效果也難以維持</div>
+          <div class="pro-con-item">高濃度換膚、雷射評估不足可能造成色素不均或疤痕，敏感痘痘肌風險更高</div>
+          <div class="pro-con-item">療程間隔2-4週，中間空窗期只靠日常保養撐著</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 階段建議 -->
+    <div style="margin-top:48px" class="reveal">
+      <div class="section-label" style="margin-bottom:24px">根據痘痘狀態的建議</div>
+      <div class="verdict-box">
+        <div class="verdict-title">HONEST ASSESSMENT</div>
+        <div class="verdict-item">
+          <div class="verdict-phase">嚴重囊腫型</div>
+          <div class="verdict-rec">請先就醫——這超過保養品的作用範疇。可能需要口服藥物（如A酸），保養品只能輔助。</div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-phase">中度炎性痘</div>
+          <div class="verdict-rec">居家系統性調理是合理且有根據的選項。建議4-8週為一個觀察週期，不要頻繁換產品。</div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-phase">痘痘穩定期</div>
+          <div class="verdict-rec">可考慮加入果酸換膚或脈衝光（改善痘後色素）。居家保養是讓療程效果持續的基礎。</div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-phase">痘疤處理</div>
+          <div class="verdict-rec">飛梭雷射是改善凹疤的有效選項，但需痘痘完全穩定後才能進行。術前術後的保養配合至關重要。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 六大技術 ══ -->
+<section class="tech-section" id="tech">
+  <div class="container">
+    <div class="section-label reveal">配方邏輯拆解</div>
+    <h2 class="section-title reveal">六大核心技術機制說明</h2>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal">
+        <div class="tech-num">TECH · 01</div>
+        <div class="tech-icon">💎</div>
+        <div class="tech-name">鑽石微晶物理技術</div>
+        <div class="tech-inci">Diamond Powder / Ruby Powder / Sapphire Powder</div>
+        <div class="tech-body">莫氏硬度9-10的礦石微粉，透過物理摩擦移除老廢角質。無酸性刺激，不受 pH 值影響，去角質效果不依賴膚質條件。</div>
+        <div class="tech-for">適合：所有膚質，含敏感肌 · 作用層：角質層</div>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-num">TECH · 02</div>
+        <div class="tech-icon">🧬</div>
+        <div class="tech-name">多胜肽工程配方</div>
+        <div class="tech-inci">Tripeptide-1 / Acetyl Hexapeptide-8 / Palmitoyl Pentapeptide-4 等</div>
+        <div class="tech-body">7-15種功能性胜肽各司其職，覆蓋促膠原、類肉毒、消水腫、亮白、修護等不同信號路徑，全面應對老化成因。</div>
+        <div class="tech-for">適合：熟齡、初老、暗沉 · 作用層：表皮至真皮</div>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-num">TECH · 03</div>
+        <div class="tech-icon">🔬</div>
+        <div class="tech-name">AHA + PHA 雙酸協同</div>
+        <div class="tech-inci">Glycolic Acid（乙醇酸）/ Lactobionic Acid（乳糖酸）</div>
+        <div class="tech-body">AHA（分子量76 Da）溶解角質橋接蛋白，效率高；PHA（分子量358 Da）分子較大刺激性低，適合敏感肌。兩者互補，分工明確。</div>
+        <div class="tech-for">適合：毛孔、粉刺；敏感可選低頻率 PHA · 作用層：角質層</div>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-num">TECH · 04</div>
+        <div class="tech-icon">🛡️</div>
+        <div class="tech-name">神經醯胺屏障矩陣</div>
+        <div class="tech-inci">Ceramide NP / Phospholipids / Cholesterol</div>
+        <div class="tech-body">仿天然角質層脂質組成比例（神經醯胺：膽固醇：脂肪酸 ≈ 1:1:1），從結構層面修復受損屏障，而非只是「補水」。</div>
+        <div class="tech-for">適合：乾燥、敏感、受損肌 · 作用層：角質層脂質</div>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-num">TECH · 05</div>
+        <div class="tech-icon">❄️</div>
+        <div class="tech-name">植物幹細胞能量網絡</div>
+        <div class="tech-inci">Rubus Arcticus Callus Extract / Leontopodium Alpinum Callus Extract 等</div>
+        <div class="tech-body">北極莓、雪絨花等極地植物幹細胞萃取，在嚴苛環境下進化出高抗氧化能力，提供抗藍光與自由基防護環境。</div>
+        <div class="tech-for">適合：抗老、抗藍光 · 作用層：表皮抗氧化防護</div>
+      </div>
+      <div class="tech-card reveal">
+        <div class="tech-num">TECH · 06</div>
+        <div class="tech-icon">🔵</div>
+        <div class="tech-name">抗藍光防護體系</div>
+        <div class="tech-inci">Bioflavonoids / Ectoin / Leontopodium Alpinum Callus Extract</div>
+        <div class="tech-body">生物類黃酮吸收短波藍光（415-455nm），Ectoin 形成保護性水合層抵禦光氧化損傷，雪絨花幹細胞提供細胞層面抗氧化。</div>
+        <div class="tech-for">適合：長時間螢幕使用者 · 作用層：表皮防護</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 明星成分 ══ -->
+<section class="ing-section" id="ingredients">
+  <div class="container">
+    <div class="section-label reveal">成分資料庫</div>
+    <h2 class="section-title reveal">值得認識的八大成分</h2>
+
+    <div class="ing-grid">
+      <div class="ing-card reveal">
+        <div class="ing-icon">💎</div>
+        <div class="ing-inci">Diamond / Ruby / Sapphire Powder</div>
+        <div class="ing-name">礦石微晶複合</div>
+        <div class="ing-benefit">物理導引 · 去角質</div>
+        <div class="ing-body">莫氏硬度9-10，有效物理性去除老廢角質。不依賴化學反應，無酸類刺激風險。是鑽石系列的核心差異化成分。</div>
+      </div>
+      <div class="ing-card reveal">
+        <div class="ing-icon">🧬</div>
+        <div class="ing-inci">Multiple Peptide Complex（7-15種）</div>
+        <div class="ing-name">功能性胜肽系統</div>
+        <div class="ing-benefit">促膠原 · 撫紋 · 亮白 · 消腫</div>
+        <div class="ing-body">涵蓋六大功能路徑的胜肽工程，每種胜肽針對不同老化成因，而非單純「含胜肽」的濃度堆疊。</div>
+      </div>
+      <div class="ing-card reveal">
+        <div class="ing-icon">🌸</div>
+        <div class="ing-inci">Madecassoside / Asiaticoside</div>
+        <div class="ing-name">積雪草苷全萃</div>
+        <div class="ing-benefit">舒敏 · 修護 · 抑疤</div>
+        <div class="ing-body">積雪草的活性萃取物，臨床研究顯示可促進膠原蛋白合成、抑制疤痕纖維化、舒緩炎症反應。術後修護的常用成分。</div>
+      </div>
+      <div class="ing-card reveal">
+        <div class="ing-icon">❄️</div>
+        <div class="ing-inci">Rubus Arcticus / Leontopodium Alpinum Callus Extract</div>
+        <div class="ing-name">北極莓 · 雪絨花幹細胞</div>
+        <div class="ing-benefit">抗藍光 · 抗氧化</div>
+        <div class="ing-body">極地植物在 UV 極強環境下進化出的高抗氧化酶系統。吸收短波可見光（藍光範圍），適合現代高螢幕使用情境。</div>
+      </div>
+      <div class="ing-card reveal">
+        <div class="ing-icon">🔵</div>
+        <div class="ing-inci">Ubiquinone（CoQ10）</div>
+        <div class="ing-name">輔酶 Q10</div>
+        <div class="ing-benefit">細胞抗氧化 · 能量代謝</div>
+        <div class="ing-body">粒線體電子傳遞鏈的關鍵成分，同時是強力脂溶性抗氧化劑。皮膚中 CoQ10 濃度隨年齡下降，外用補充有文獻支持。</div>
+      </div>
+      <div class="ing-card reveal">
+        <div class="ing-icon">🌿</div>
+        <div class="ing-inci">Ceramide NP + Phospholipids + Cholesterol</div>
+        <div class="ing-name">屏障脂質三元組</div>
+        <div class="ing-benefit">屏障重建 · 鎖水</div>
+        <div class="ing-body">健康角質層脂質由這三種成分以約1:1:1構成。任一比例失衡都會造成屏障功能下降。補充需三種同時存在才有意義。</div>
+      </div>
+      <div class="ing-card reveal">
+        <div class="ing-icon">✨</div>
+        <div class="ing-inci">Glutathione（谷胱甘肽）</div>
+        <div class="ing-name">谷胱甘肽</div>
+        <div class="ing-benefit">抗氧美白 · 還原黑色素</div>
+        <div class="ing-body">細胞內最重要的抗氧化劑之一，同時能將氧化型（深色）黑色素還原為還原型（淡色）。搭配維C協同效果更佳。</div>
+        <div class="ing-note">注意：外用吸收率研究仍有爭議，搭配促滲透成分效果較佳。</div>
+      </div>
+      <div class="ing-card reveal">
+        <div class="ing-icon">🫀</div>
+        <div class="ing-inci">Hydrolyzed Elastin</div>
+        <div class="ing-name">水解彈性蛋白</div>
+        <div class="ing-benefit">彈力支撐 · 緊緻</div>
+        <div class="ing-body">彈性蛋白水解後分子量降低，滲透性提升。補充皮膚彈性蛋白的原料成分，搭配促膠原胜肽在鑽石系列中形成協同效果。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 膚質建議 ══ -->
+<section class="skin-section" id="skintype">
+  <div class="container">
+    <div class="section-label reveal">使用建議</div>
+    <h2 class="section-title reveal">根據膚質狀態的起始建議</h2>
+    <p class="section-sub reveal">以 4-8 週為一個觀察週期，不要頻繁更換產品。</p>
+
+    <div class="skin-grid-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px">
+      <div class="skin-card reveal" style="--skin-color:#4a9eff">
+        <div class="skin-type">TYPE 01 · 螢幕肌</div>
+        <div class="skin-name">長時間螢幕使用者</div>
+        <div class="skin-desc">藍光氧化損傷、壓力性出油、膚色暗沉是主要問題。</div>
+        <ul class="skin-traits">
+          <li>膚色暗沉、毛孔明顯</li>
+          <li>壓力大時容易出油冒痘</li>
+          <li>沒時間做複雜保養</li>
+        </ul>
+        <div class="skin-rec">
+          <div class="skin-rec-label">成分邏輯建議</div>
+          <div class="skin-rec-text">優先補充抗藍光成分（生物類黃酮、雪絨花幹細胞）+ 多胜肽導入 + 玻尿酸補水。從清潔→化妝水→透明質酸三步驟開始。</div>
+        </div>
+      </div>
+
+      <div class="skin-card reveal" style="--skin-color:#d4827a">
+        <div class="skin-type">TYPE 02 · 玻璃肌</div>
+        <div class="skin-name">敏感受損屏障</div>
+        <div class="skin-desc">屏障功能不足，容易對各種刺激過度反應。</div>
+        <ul class="skin-traits">
+          <li>泛紅、乾燥緊繃反覆出現</li>
+          <li>曾被酸類或過度去角質傷過</li>
+          <li>換季就崩潰</li>
+        </ul>
+        <div class="skin-rec">
+          <div class="skin-rec-label">成分邏輯建議</div>
+          <div class="skin-rec-text">優先修護屏障：神經醯胺三元組 + 積雪草苷。避開 AHA，從 PHA 頻率最低開始嘗試。建議以物理性鑽石面膜代替酸類去角質。</div>
+        </div>
+      </div>
+
+      <div class="skin-card reveal" style="--skin-color:#9880b8">
+        <div class="skin-type">TYPE 03 · 抗老焦慮肌</div>
+        <div class="skin-name">初見老化徵兆</div>
+        <div class="skin-desc">膠原蛋白流失、彈力下降是核心問題，需要多路徑介入。</div>
+        <ul class="skin-traits">
+          <li>法令紋、眼尾紋漸漸明顯</li>
+          <li>膚色失去光澤與彈力</li>
+          <li>重視成分、不想亂買</li>
+        </ul>
+        <div class="skin-rec">
+          <div class="skin-rec-label">成分邏輯建議</div>
+          <div class="skin-rec-text">胜肽多路徑系統是核心：促膠原三胜肽 + 類肉毒六胜肽 + 消腫四胜肽。搭配鑽石物理導引提升胜肽滲透效率。</div>
+        </div>
+      </div>
+
+      <div class="skin-card reveal" style="--skin-color:#c9a96e">
+        <div class="skin-type">TYPE 04 · 醫美疲憊肌</div>
+        <div class="skin-name">長期療程後的脆弱期</div>
+        <div class="skin-desc">過度刺激導致屏障變薄、耐受性降低，需要停止刺激、重建屏障。</div>
+        <ul class="skin-traits">
+          <li>雷射後恢復期越來越長</li>
+          <li>療程停止就反彈</li>
+          <li>花大錢效果難以維持</li>
+        </ul>
+        <div class="skin-rec">
+          <div class="skin-rec-label">成分邏輯建議</div>
+          <div class="skin-rec-text">暫停所有酸類，優先使用積雪草苷 + 神經醯胺修護屏障。待屏障穩定後，可從最低頻率的 PHA 開始重新引入去角質步驟。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ CTA ══ -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner">
+    <div class="cta-label">筆記到這裡</div>
+    <h2 class="cta-title reveal" style="font-style:normal">如果你有其他疑問</h2>
+    <a href="#" class="cta-btn reveal">馬上問我 →</a>
+
+    <div class="reveal" style="margin-top:72px;border:1px solid var(--border);display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;max-width:680px;margin-left:auto;margin-right:auto">
+
+      <div style="padding:28px 32px;text-align:center">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:10px">3</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;line-height:1.8">CGMP<br>ISO 9001 · ISO 22716</div>
+      </div>
+
+      <div style="background:var(--border)"></div>
+
+      <div style="padding:28px 32px;text-align:center">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:10px">15<span style="font-size:28px">+</span></div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;line-height:1.8">種功能胜肽<br>奈米化分子滲透</div>
+      </div>
+
+      <div style="background:var(--border)"></div>
+
+      <div style="padding:28px 32px;text-align:center">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--gold);line-height:1;margin-bottom:10px">365</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;line-height:1.8">天持續調理<br>每日不間斷作用</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div style="max-width:680px;margin:0 auto;padding:40px 0;border-top:1px solid var(--border)">
+
+      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:20px;">
+        關於這份筆記
+      </div>
+
+      <p style="font-size:13px;color:var(--muted);line-height:2;margin-bottom:32px;">
+        本內容為個人體驗與成分研究紀錄，非品牌官方內容，非醫療建議，使用任何保養品前建議先進行局部肌膚測試。
+      </p>
+
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">
+        參考來源
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px">
+        <a href="https://www.ewg.org/skindeep/" target="_blank" style="font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--border);padding:5px 12px;transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">EWG Skin Deep Database ↗</a>
+        <a href="https://ec.europa.eu/growth/tools-databases/cosing/" target="_blank" style="font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--border);padding:5px 12px;transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">CosIng 歐盟成分資料庫 ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" style="font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--border);padding:5px 12px;transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">PubMed 相關成分文獻 ↗</a>
+        <a href="https://www.mfds.go.kr/" target="_blank" style="font-family:var(--mono);font-size:10px;color:var(--muted);border:1px solid var(--border);padding:5px 12px;transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">韓國 MFDS 官方資料 ↗</a>
+      </div>
+
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);opacity:.4;letter-spacing:2px;line-height:2">
+        © 2025 · 成分研究筆記 · 個人體驗紀錄 · 非醫療建議
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),
+        (parseInt(e.target.dataset.delay)||0)*80);
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+reveals.forEach((el,i)=>{
+  el.dataset.delay = i%5;
+  io.observe(el);
+});
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(s=>{
+    if(window.scrollY >= s.offsetTop-200) current=s.id;
+  });
+  navLinks.forEach(a=>{
+    a.style.color = a.getAttribute('href')==='#'+current ? 'var(--text)' : '';
+  });
+});
+</script>
+
+</body>
+</html>
