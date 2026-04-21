@@ -306,55 +306,15 @@ footer{background:#0a0a0b;border-top:1px solid var(--border);padding:40px 24px}
     <div class="label reveal">成分解析</div>
     <h2 class="reveal">同樣是「含胜肽」，差在哪裡？</h2>
 
-    <!-- 胜肽是什麼 + SVG -->
+    <!-- 胜肽是什麼 + 插圖 -->
     <div class="reveal" style="display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:center;margin-bottom:48px">
       <div>
         <p style="font-size:13px;color:var(--muted);line-height:2">
           胜肽不是直接「補充」皮膚缺少的東西，而是<strong style="color:#e8e2d9">模仿生物信號，告訴細胞去做某件事</strong>。不同胜肽作用在不同靶點，<strong style="color:#e8e2d9">「含幾種」比「含多少」更重要。</strong>
         </p>
       </div>
-      <div style="display:flex;justify-content:center">
-        <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px">
-          <defs>
-            <marker id="arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
-              <path d="M0,0 L0,7 L7,3.5 z" fill="#c9a96e" opacity=".7"/>
-            </marker>
-            <radialGradient id="gP" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#c9a96e" stop-opacity=".22"/>
-              <stop offset="100%" stop-color="#c9a96e" stop-opacity=".03"/>
-            </radialGradient>
-            <radialGradient id="gC" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#5fbf8a" stop-opacity=".14"/>
-              <stop offset="100%" stop-color="#5fbf8a" stop-opacity=".02"/>
-            </radialGradient>
-          </defs>
-          <circle cx="56" cy="100" r="36" fill="url(#gP)" stroke="#c9a96e" stroke-width="1.5" opacity=".8"/>
-          <circle cx="56" cy="100" r="25" fill="none" stroke="#c9a96e" stroke-width=".5" stroke-dasharray="3,3" opacity=".4"/>
-          <text x="56" y="96" text-anchor="middle" font-size="11" fill="#c9a96e" font-family="monospace" font-weight="500">胜肽</text>
-          <text x="56" y="110" text-anchor="middle" font-size="8" fill="#c9a96e" font-family="monospace" opacity=".5">Peptide</text>
-          <path d="M94,100 L150,100" stroke="#c9a96e" stroke-width="1.5" fill="none" opacity=".5" marker-end="url(#arr)" stroke-dasharray="5,3"/>
-          <rect x="152" y="70" width="86" height="60" rx="5" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.16)" stroke-width="1.2"/>
-          <rect x="160" y="78" width="70" height="18" rx="3" fill="rgba(201,169,110,.1)" stroke="rgba(201,169,110,.25)" stroke-width=".8"/>
-          <text x="195" y="91" text-anchor="middle" font-size="8.5" fill="#c9a96e" font-family="monospace">細胞受體</text>
-          <text x="195" y="108" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.4)" font-family="monospace">接收信號</text>
-          <text x="195" y="121" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.4)" font-family="monospace">啟動下游路徑</text>
-          <path d="M195,132 L195,166" stroke="#c9a96e" stroke-width="1.5" fill="none" opacity=".4" marker-end="url(#arr)" stroke-dasharray="5,3"/>
-          <ellipse cx="195" cy="202" rx="66" ry="34" fill="url(#gC)" stroke="#5fbf8a" stroke-width="1.2" opacity=".8"/>
-          <ellipse cx="195" cy="202" rx="50" ry="23" fill="none" stroke="#5fbf8a" stroke-width=".5" stroke-dasharray="3,3" opacity=".4"/>
-          <text x="195" y="198" text-anchor="middle" font-size="9" fill="#5fbf8a" font-family="monospace">細胞核</text>
-          <text x="195" y="213" text-anchor="middle" font-size="8" fill="#5fbf8a" font-family="monospace" opacity=".8">執行生產指令</text>
-          <line x1="262" y1="188" x2="294" y2="174" stroke="#5fbf8a" stroke-width="1" opacity=".35" stroke-dasharray="3,2"/>
-          <line x1="262" y1="202" x2="294" y2="202" stroke="#5fbf8a" stroke-width="1" opacity=".35" stroke-dasharray="3,2"/>
-          <line x1="262" y1="216" x2="294" y2="230" stroke="#5fbf8a" stroke-width="1" opacity=".35" stroke-dasharray="3,2"/>
-          <rect x="296" y="162" width="100" height="24" rx="3" fill="rgba(95,191,138,.07)" stroke="rgba(95,191,138,.22)" stroke-width=".8"/>
-          <text x="346" y="178" text-anchor="middle" font-size="8.5" fill="#5fbf8a" font-family="monospace">製造膠原蛋白</text>
-          <rect x="296" y="190" width="100" height="24" rx="3" fill="rgba(95,191,138,.07)" stroke="rgba(95,191,138,.22)" stroke-width=".8"/>
-          <text x="346" y="206" text-anchor="middle" font-size="8.5" fill="#5fbf8a" font-family="monospace">抑制肌肉收縮</text>
-          <rect x="296" y="218" width="100" height="24" rx="3" fill="rgba(95,191,138,.07)" stroke="rgba(95,191,138,.22)" stroke-width=".8"/>
-          <text x="346" y="234" text-anchor="middle" font-size="8.5" fill="#5fbf8a" font-family="monospace">阻斷色素傳遞…</text>
-          <text x="8" y="62" font-size="8" fill="rgba(201,169,110,.45)" font-family="monospace">分子量</text>
-          <text x="8" y="73" font-size="8" fill="rgba(201,169,110,.45)" font-family="monospace">500-2000 Da</text>
-        </svg>
+      <div>
+        <img src="peptides.png" alt="Renecell 胜肽信號機制圖解" style="width:100%;border-radius:8px;display:block">
       </div>
     </div>
 
